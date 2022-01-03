@@ -1,0 +1,17 @@
+import express from 'express'
+//import path from 'path'
+import { generateUploadURL } from './s3.js'
+
+const app = express()
+
+app.use(express.static('../front'));
+
+app.get('/s3Url', async (req, res) => {
+  const fileName = req.query['file-name'];
+  console.log({fileName});
+  const url = await generateUploadURL();
+
+  res.send({url})
+})
+
+app.listen(3000, () => console.log("listening on port 8080"))
